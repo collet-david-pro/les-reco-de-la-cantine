@@ -2,7 +2,7 @@
 
 > Nom du site : **Les reco de la cantine** (dossier de travail : Filmo).
 > Document de cadrage destiné aux agents IA qui travailleront sur ce projet.
-> Statut : **version 0.1.0 développée** (étapes 1 à 7 de la section 11). Reste à faire par le propriétaire : choisir la palette (section 13) et vérifier les points listés en section 13.
+> Statut : **version 0.1.0 développée** (étapes 1 à 7 de la section 11). Reste à faire par le propriétaire : voir la section 13.
 
 <!--
 NOTE AUX AGENTS IA
@@ -813,7 +813,7 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 **À faire par le propriétaire**
 - **Choisir la palette** : ouvrir `assets/palettes.html` (3 propositions : Terracotta, Vert sauge, Encre et moutarde). Terracotta est appliquée
   provisoirement ; changer = remplacer le bloc `:root` en tête de `assets/css/app.css` (et `theme_color` dans `PageController::manifest()` + `layout/head.php`).
-- **Adresse du dépôt GitHub** : renseigner la constante `CANTINE_REPO_URL` dans `app/bootstrap.php` (User-Agent des API, page « À propos »).
+- Dépôt GitHub créé (privé pour l'instant) : https://github.com/collet-david-pro/les-reco-de-la-cantine — à passer en public une fois la v0.1.0 validée.
 - **Liens boutiques par défaut** : Place des Libraires vérifié (réponse 200) ; Amazon et Fnac bloquent les robots, à vérifier dans un navigateur.
 - Tester la PWA sur un vrai téléphone Android et iOS (nécessite HTTPS), et les clés TMDB/RAWG réelles (les connecteurs sont testés sur des réponses enregistrées).
 

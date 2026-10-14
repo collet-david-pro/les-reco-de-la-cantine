@@ -11,7 +11,7 @@ define('CANTINE_ROOT', dirname(__DIR__));
 define('CANTINE_APP', __DIR__);
 define('CANTINE_DATA', CANTINE_ROOT . '/data');
 define('CANTINE_VERSION', trim((string) @file_get_contents(CANTINE_ROOT . '/VERSION')) ?: '0.0.0');
-define('CANTINE_REPO_URL', 'https://github.com/les-reco-de-la-cantine/les-reco-de-la-cantine');
+define('CANTINE_REPO_URL', 'https://github.com/collet-david-pro/les-reco-de-la-cantine');
 
 // Autoload PSR-4 maison : Cantine\Support\Db -> app/Support/Db.php
 spl_autoload_register(static function (string $class): void {
