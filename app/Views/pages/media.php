@@ -31,6 +31,7 @@ $sourceLabels = ['tmdb' => 'TMDB', 'openlibrary' => 'Open Library', 'rawg' => 'R
             </p>
             <p class="media-by">
                 <?= partial('partials/avatar', ['name' => $media['added_by_name'], 'color' => $media['added_by_color']]) ?>
+                <span>
                 <?php if ($media['added_by'] !== null): ?>
                     <?= t('media.recommended_by', [
                         'who' => '<a href="' . e(url('membre', ['id' => $media['added_by']])) . '">' . e($media['added_by_name']) . '</a>',
@@ -39,6 +40,7 @@ $sourceLabels = ['tmdb' => 'TMDB', 'openlibrary' => 'Open Library', 'rawg' => 'R
                 <?php else: ?>
                     <?= e(t('media.recommended_by_former', ['date' => date_short($media['created_at'])])) ?>
                 <?php endif; ?>
+                </span>
             </p>
             <?php if ($extraLines): ?>
                 <dl class="facts">

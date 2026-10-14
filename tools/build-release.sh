@@ -20,7 +20,7 @@ php "$ROOT/tests/run.php" > /dev/null || { echo "Des tests échouent : release a
 mkdir -p "$WORK/$NAME" "$DIST"
 rsync -a "$ROOT/" "$WORK/$NAME/" \
     --exclude '/data/' --exclude '/dist/' --exclude '/tests/' --exclude '/tools/' --exclude '/vendor/' \
-    --exclude '/projet.md' --exclude '/assets/palettes.html' \
+    --exclude '/projet.md' --exclude '/assets/palettes.html' --exclude '/docs/' \
     --exclude '.git' --exclude '.gitignore' --exclude '.github' --exclude '.DS_Store' --exclude '.idea' --exclude '.vscode'
 
 ZIP="$DIST/cantine-v$VERSION.zip"

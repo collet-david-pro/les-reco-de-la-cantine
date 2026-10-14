@@ -817,8 +817,8 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 **À faire par le propriétaire**
 - **Choisir la palette** : ouvrir `assets/palettes.html` (3 propositions : Terracotta, Vert sauge, Encre et moutarde). Terracotta est appliquée
   provisoirement ; changer = remplacer le bloc `:root` en tête de `assets/css/app.css` (et `theme_color` dans `PageController::manifest()` + `layout/head.php`).
-- Dépôt GitHub créé (privé pour l'instant) : https://github.com/collet-david-pro/les-reco-de-la-cantine — à passer en public une fois la v0.1.0 validée
-  (et après avoir réglé la protection de `data/`, pour ne pas publier une procédure d'installation incomplète).
+- Dépôt GitHub **public** : https://github.com/collet-david-pro/les-reco-de-la-cantine — release `v0.1.0` publiée le 14/10/2026 avec l'archive `.zip`.
+  README réécrit en tutoriel (captures dans `docs/captures/`, exclues de l'archive). Signalement des failles : onglet Security du dépôt.
 - **Liens boutiques par défaut** : Place des Libraires vérifié (réponse 200) ; Amazon et Fnac bloquent les robots, à vérifier dans un navigateur.
 - Tester la PWA sur un vrai téléphone Android et iOS (nécessite HTTPS), et les clés TMDB/RAWG réelles (les connecteurs sont testés sur des réponses enregistrées).
 
