@@ -2,7 +2,7 @@
 
 > Nom du site : **Les reco de la cantine** (dossier de travail : Filmo).
 > Document de cadrage destiné aux agents IA qui travailleront sur ce projet.
-> Statut : **version 0.1.0 développée** (étapes 1 à 7 de la section 11). Reste à faire par le propriétaire : voir la section 13.
+> Statut : **version 0.1.0 en ligne** sur le serveur YunoHost du propriétaire (14/10/2026), fonctionnement validé. Un point de sécurité reste ouvert (protection de `data/` sous nginx) : voir sections 10 et 13.
 
 <!--
 NOTE AUX AGENTS IA
@@ -743,7 +743,11 @@ AGENTS — Points tranchés par le propriétaire (anciennement "À VALIDER") :
 - Deezer : source principale pour la musique, MusicBrainz abandonné (section 7) ;
 - Google Books : NON (section 7) ;
 - données de démonstration : OUI, depuis le panneau admin uniquement (section 3.1).
-Il ne reste aucun point "À VALIDER". Tout nouveau point de ce type doit être ajouté ici.
+Point "À VALIDER" ouvert (voir section 13, "Mise en production") :
+- protection de data/ sous nginx : (a) le propriétaire ajoute la règle nginx du README, OU (b) rendre l'emplacement
+  du dossier de données configurable (option data_dir, hors du dossier web), OU (c) les deux.
+  Ne rien coder avant la réponse du propriétaire.
+Tout nouveau point de ce type doit être ajouté ici.
 Ne pas réintroduire les fonctionnalités écartées ci-dessus, même partiellement (ex. pas de page de stats
 "cachée" ni de champ "pourquoi je recommande").
 -->
@@ -813,7 +817,8 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 **À faire par le propriétaire**
 - **Choisir la palette** : ouvrir `assets/palettes.html` (3 propositions : Terracotta, Vert sauge, Encre et moutarde). Terracotta est appliquée
   provisoirement ; changer = remplacer le bloc `:root` en tête de `assets/css/app.css` (et `theme_color` dans `PageController::manifest()` + `layout/head.php`).
-- Dépôt GitHub créé (privé pour l'instant) : https://github.com/collet-david-pro/les-reco-de-la-cantine — à passer en public une fois la v0.1.0 validée.
+- Dépôt GitHub créé (privé pour l'instant) : https://github.com/collet-david-pro/les-reco-de-la-cantine — à passer en public une fois la v0.1.0 validée
+  (et après avoir réglé la protection de `data/`, pour ne pas publier une procédure d'installation incomplète).
 - **Liens boutiques par défaut** : Place des Libraires vérifié (réponse 200) ; Amazon et Fnac bloquent les robots, à vérifier dans un navigateur.
 - Tester la PWA sur un vrai téléphone Android et iOS (nécessite HTTPS), et les clés TMDB/RAWG réelles (les connecteurs sont testés sur des réponses enregistrées).
 
@@ -829,3 +834,15 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 - Les messages de l'installeur et du diagnostic sont écrits en dur (en français) : l'installeur doit fonctionner avant tout chargement.
 - Données de démo : mot de passe commun `demo-cantine-2026`, affiché dans l'administration.
 - `assets/palettes.html` est exclu de l'archive de release (page de travail).
+
+**Mise en production (14/10/2026)**
+- Archive `cantine-v0.1.0.zip` téléversée sur le serveur YunoHost du propriétaire, installée via `install.php` : le site fonctionne,
+  le propriétaire en est très satisfait.
+- **Point ouvert — sécurité** : la configuration nginx n'a **pas** été modifiée. nginx ignore les `.htaccess` : le dossier `data/` peut donc être
+  lisible depuis le web. Les fichiers PHP (`config.php`) restent protégés par la garde `defined('CANTINE')`, mais ces fichiers seraient
+  téléchargeables s'ils existent : `cantine.sqlite` (si SQLite), `logs/app.log`, `sauvegardes/*.json` (contiennent les mots de passe hachés).
+  - Vérification : *Administration › Diagnostic*, ligne « Dossier data/ protégé du web » (rouge = exposé), ou ouvrir `https://<site>/data/.probe`
+    (doit renvoyer 403 ou 404).
+  - Solutions : voir le point "À VALIDER" en section 10. En attendant, éviter les sauvegardes de sécurité sur le serveur
+    (elles sont créées à chaque restauration) et préférer MySQL à SQLite.
+
