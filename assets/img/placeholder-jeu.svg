@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <rect width="200" height="300" fill="#EDE9FE"/>
+  <rect x="50" y="100" width="100" height="56" rx="28" fill="none" stroke="#5B21B6" stroke-width="8"/><path d="M78 116v24M66 128h24" stroke="#5B21B6" stroke-width="7" stroke-linecap="round"/><circle cx="124" cy="122" r="6" fill="#5B21B6"/><circle cx="134" cy="134" r="6" fill="#5B21B6"/>
+  <text x="100" y="215" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700" fill="#5B21B6">Jeu vidéo</text>
+</svg>

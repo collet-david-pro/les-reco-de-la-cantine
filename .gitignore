@@ -1,0 +1,10 @@
+# Données de l'instance : jamais dans git (configuration, base, journaux, sauvegardes)
+/data/
+
+# Développement
+/vendor/
+/dist/
+.DS_Store
+.idea/
+.vscode/
+*.log

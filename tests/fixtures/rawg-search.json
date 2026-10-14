@@ -1,0 +1,5 @@
+{"count":2,"results":[
+ {"id":3328,"name":"The Witcher 3: Wild Hunt","released":"2015-05-18","background_image":"https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
+  "platforms":[{"platform":{"id":4,"name":"PC"}},{"platform":{"id":18,"name":"PlayStation 4"}},{"platform":{"id":7,"name":"Nintendo Switch"}}]},
+ {"id":10,"name":"Sans image","released":null,"background_image":"http://insecure.example/img.jpg","platforms":null}
+]}

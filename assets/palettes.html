@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choix de la palette · Les reco de la cantine</title>
+<!--
+  Page de démonstration statique (développement) : trois palettes proposées pour le site.
+  Pour appliquer une palette, recopier son bloc de variables dans le bloc :root de assets/css/app.css.
+  Tous les couples texte/fond affichés ici respectent le contraste WCAG AA (4,5:1 minimum).
+-->
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #ECE8E1; color: #2B2622; }
+    header { padding: 24px 16px 8px; max-width: 1200px; margin: 0 auto; }
+    header h1 { margin: 0 0 6px; }
+    header p { margin: 0; max-width: 700px; }
+    .palettes { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 16px; max-width: 1200px; margin: 0 auto; }
+    .palette { background: var(--bg); color: var(--text); border-radius: 18px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.12); display: flex; flex-direction: column; }
+    .palette h2 { margin: 0; padding: 16px 16px 4px; font-size: 1.25rem; }
+    .palette > p { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .92rem; }
+    .swatches { display: flex; gap: 6px; padding: 0 16px 14px; flex-wrap: wrap; }
+    .swatch { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
+    .demo { padding: 0 16px 16px; display: grid; gap: 14px; flex: 1; }
+    .card { background: var(--surface); border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.06); overflow: hidden; display: grid; grid-template-columns: 96px 1fr; }
+    .cover { aspect-ratio: 2/3; background: linear-gradient(160deg, var(--accent-soft), var(--surface-2)); display: grid; place-items: center; font-size: 2rem; }
+    .card-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .card-title { font-weight: 700; }
+    .meta { color: var(--muted); font-size: .85rem; }
+    .badge { align-self: flex-start; background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 2px 8px; font-size: .75rem; font-weight: 700; }
+    .pill { align-self: flex-start; background: #DCFCE7; color: #166534; border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 700; }
+    .stars { font-size: 1.6rem; letter-spacing: 2px; }
+    .stars .on { color: var(--star); }
+    .stars .off { color: var(--star-off); }
+    .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn { min-height: 44px; padding: 10px 18px; border-radius: 999px; font: inherit; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    .link { color: var(--accent); font-weight: 600; }
+    .tabbar { margin-top: auto; display: grid; grid-template-columns: repeat(5, 1fr); background: var(--surface); border-top: 1px solid var(--border); padding: 8px 0 10px; }
+    .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--muted); font-size: .7rem; font-weight: 600; }
+    .tab .ico { width: 24px; height: 24px; border-radius: 6px; border: 2px solid currentColor; }
+    .tab.active { color: var(--accent); }
+    .tab.add .ico { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--accent); margin-top: -18px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+    .callout { background: var(--accent-soft); color: var(--accent-hover); border-radius: 8px; padding: 10px 12px; font-weight: 600; font-size: .9rem; }
+
+    /* ===== Palette 1 : Terracotta (palette actuelle du site) ===== */
+    .p-terracotta {
+        --bg: #FAF7F2; --surface: #FFFFFF; --surface-2: #F3EEE6; --text: #2B2622; --muted: #6B625A; --border: #E6DED3;
+        --accent: #C2410C; --accent-hover: #9A3412; --accent-soft: #FDEBDD; --on-accent: #FFFFFF; --star: #D97706; --star-off: #D6CEC4;
+    }
+    /* ===== Palette 2 : Vert sauge ===== */
+    .p-sauge {
+        --bg: #F6F7F3; --surface: #FFFFFF; --surface-2: #ECEFE8; --text: #1F2A23; --muted: #5E6B62; --border: #DCE2D8;
+        --accent: #3F6B4F; --accent-hover: #2F5440; --accent-soft: #E3EDE5; --on-accent: #FFFFFF; --star: #C98A0B; --star-off: #CFD6CC;
+    }
+    /* ===== Palette 3 : Encre et moutarde ===== */
+    .p-encre {
+        --bg: #FBF8F1; --surface: #FFFFFF; --surface-2: #F2EDE1; --text: #1E2430; --muted: #5F6470; --border: #E5DFD1;
+        --accent: #1E3A5F; --accent-hover: #142A47; --accent-soft: #FBEFCB; --on-accent: #FFFFFF; --star: #E0A526; --star-off: #DAD3C4;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Choix de la palette</h1>
+    <p>Trois propositions pour « Les reco de la cantine ». Le site utilise aujourd'hui la palette <strong>Terracotta</strong> ; changer revient à remplacer un seul bloc de variables dans <code>assets/css/app.css</code>.</p>
+</header>
+<main class="palettes">
+    <section class="palette p-terracotta" aria-labelledby="t1">
+        <h2 id="t1">1. Terracotta</h2>
+        <p>Orange brûlé chaleureux, esprit « cantine » et cuisine. Palette actuelle.</p>
+        <div class="swatches"><span class="swatch" style="background:#C2410C"></span><span class="swatch" style="background:#FDEBDD"></span><span class="swatch" style="background:#FAF7F2"></span><span class="swatch" style="background:#2B2622"></span><span class="swatch" style="background:#D97706"></span></div>
+        <div class="demo">
+            <div class="callout">3 nouvelles recommandations depuis votre dernière visite.</div>
+            <article class="card"><div class="cover">🎬</div><div class="card-body"><span class="badge">Nouveau</span><span class="card-title">Le Voyage dans la Lune</span><span class="meta">1902 · Film · recommandé par Alice</span><span class="pill">Vu · 4★</span></div></article>
+            <div class="stars" aria-label="Note 4 sur 5"><span class="on">★★★★</span><span class="off">★</span></div>
+            <div class="buttons"><button class="btn btn-primary">Recommander</button><button class="btn">Un autre !</button></div>
+            <a class="link" href="#">Voir ma liste</a>
+        </div>
+        <nav class="tabbar"><span class="tab active"><span class="ico"></span>Accueil</span><span class="tab"><span class="ico"></span>Ma liste</span><span class="tab add"><span class="ico"></span>Ajouter</span><span class="tab"><span class="ico"></span>Au hasard</span><span class="tab"><span class="ico"></span>Profil</span></nav>
+    </section>
+
+    <section class="palette p-sauge" aria-labelledby="t2">
+        <h2 id="t2">2. Vert sauge</h2>
+        <p>Plus calme et naturel, façon potager. Reposant pour les yeux.</p>
+        <div class="swatches"><span class="swatch" style="background:#3F6B4F"></span><span class="swatch" style="background:#E3EDE5"></span><span class="swatch" style="background:#F6F7F3"></span><span class="swatch" style="background:#1F2A23"></span><span class="swatch" style="background:#C98A0B"></span></div>
+        <div class="demo">
+            <div class="callout">3 nouvelles recommandations depuis votre dernière visite.</div>
+            <article class="card"><div class="cover">🎬</div><div class="card-body"><span class="badge">Nouveau</span><span class="card-title">Le Voyage dans la Lune</span><span class="meta">1902 · Film · recommandé par Alice</span><span class="pill">Vu · 4★</span></div></article>
+            <div class="stars" aria-label="Note 4 sur 5"><span class="on">★★★★</span><span class="off">★</span></div>
+            <div class="buttons"><button class="btn btn-primary">Recommander</button><button class="btn">Un autre !</button></div>
+            <a class="link" href="#">Voir ma liste</a>
+        </div>
+        <nav class="tabbar"><span class="tab active"><span class="ico"></span>Accueil</span><span class="tab"><span class="ico"></span>Ma liste</span><span class="tab add"><span class="ico"></span>Ajouter</span><span class="tab"><span class="ico"></span>Au hasard</span><span class="tab"><span class="ico"></span>Profil</span></nav>
+    </section>
+
+    <section class="palette p-encre" aria-labelledby="t3">
+        <h2 id="t3">3. Encre et moutarde</h2>
+        <p>Bleu nuit élégant, touches moutarde pour les étoiles et les nouveautés.</p>
+        <div class="swatches"><span class="swatch" style="background:#1E3A5F"></span><span class="swatch" style="background:#FBEFCB"></span><span class="swatch" style="background:#FBF8F1"></span><span class="swatch" style="background:#1E2430"></span><span class="swatch" style="background:#E0A526"></span></div>
+        <div class="demo">
+            <div class="callout">3 nouvelles recommandations depuis votre dernière visite.</div>
+            <article class="card"><div class="cover">🎬</div><div class="card-body"><span class="badge">Nouveau</span><span class="card-title">Le Voyage dans la Lune</span><span class="meta">1902 · Film · recommandé par Alice</span><span class="pill">Vu · 4★</span></div></article>
+            <div class="stars" aria-label="Note 4 sur 5"><span class="on">★★★★</span><span class="off">★</span></div>
+            <div class="buttons"><button class="btn btn-primary">Recommander</button><button class="btn">Un autre !</button></div>
+            <a class="link" href="#">Voir ma liste</a>
+        </div>
+        <nav class="tabbar"><span class="tab active"><span class="ico"></span>Accueil</span><span class="tab"><span class="ico"></span>Ma liste</span><span class="tab add"><span class="ico"></span>Ajouter</span><span class="tab"><span class="ico"></span>Au hasard</span><span class="tab"><span class="ico"></span>Profil</span></nav>
+    </section>
+</main>
+</body>
+</html>

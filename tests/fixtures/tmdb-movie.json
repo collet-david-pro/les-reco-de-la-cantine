@@ -1,0 +1,18 @@
+{"id":603,"title":"Matrix","original_title":"The Matrix","release_date":"1999-03-30","runtime":136,
+ "overview":"Programmeur anonyme dans un service administratif le jour, Thomas Anderson devient Neo la nuit venue.",
+ "poster_path":"/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg","imdb_id":"tt0133093",
+ "genres":[{"id":28,"name":"Action"},{"id":878,"name":"Science-Fiction"}],
+ "credits":{"cast":[],"crew":[{"job":"Director","name":"Lana Wachowski"},{"job":"Director","name":"Lilly Wachowski"},{"job":"Producer","name":"Joel Silver"}]},
+ "external_ids":{"imdb_id":"tt0133093"},
+ "videos":{"results":[
+   {"iso_639_1":"en","key":"vKQi3bBA1y8","site":"YouTube","type":"Trailer","official":true},
+   {"iso_639_1":"fr","key":"m8e-FF8MsqU","site":"YouTube","type":"Trailer","official":false},
+   {"iso_639_1":"fr","key":"xxxxxxxxxxx","site":"Vimeo","type":"Trailer"}
+ ]},
+ "watch/providers":{"results":{
+   "FR":{"link":"https://www.themoviedb.org/movie/603-the-matrix/watch?locale=FR",
+     "flatrate":[{"logo_path":"/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg","provider_id":8,"provider_name":"Netflix","display_priority":0}],
+     "rent":[{"logo_path":"/9ghgSC0MA082EL6HLCW3GalykFD.jpg","provider_id":2,"provider_name":"Apple TV","display_priority":4}],
+     "buy":[{"logo_path":"/9ghgSC0MA082EL6HLCW3GalykFD.jpg","provider_id":2,"provider_name":"Apple TV","display_priority":4}]},
+   "US":{"link":"https://example.org","flatrate":[{"provider_name":"Max","logo_path":"/x.jpg"}]}
+ }}}

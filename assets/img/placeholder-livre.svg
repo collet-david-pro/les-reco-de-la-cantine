@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <rect width="200" height="300" fill="#DCFCE7"/>
+  <path d="M100 98c-14-10-30-12-44-10v70c14-2 30 0 44 10 14-10 30-12 44-10V88c-14-2-30 0-44 10Z" fill="none" stroke="#166534" stroke-width="8" stroke-linejoin="round"/><path d="M100 98v70" stroke="#166534" stroke-width="6"/>
+  <text x="100" y="215" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700" fill="#166534">Livre</text>
+</svg>

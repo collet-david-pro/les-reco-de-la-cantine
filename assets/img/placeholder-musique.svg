@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <rect width="200" height="300" fill="#FEF3C7"/>
+  <path d="M86 160V96l52-12v62" fill="none" stroke="#92400E" stroke-width="8" stroke-linejoin="round"/><circle cx="74" cy="160" r="14" fill="#92400E"/><circle cx="126" cy="148" r="14" fill="#92400E"/>
+  <text x="100" y="215" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700" fill="#92400E">Musique</text>
+</svg>

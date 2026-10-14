@@ -1,0 +1,40 @@
+# Les reco de la cantine — règles Apache.
+# (Sous nginx, ce fichier est ignoré : voir la configuration conseillée dans le README.)
+
+DirectoryIndex index.php
+Options -Indexes
+
+# Fichiers cachés (.git, .env...) et fichiers de développement : interdits.
+<FilesMatch "(^\.|\.(md|sh|lock|sqlite|sqlite-wal|sqlite-shm|log)$|^VERSION$|^composer\.)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Dossiers internes : interdits (chacun contient aussi son propre .htaccess).
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(app|migrations|data|tests|tools)(/|$) - [F,L]
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+    AddType image/svg+xml .svg
+</IfModule>
+
+# En-têtes de sécurité pour les fichiers statiques (les pages PHP envoient les leurs).
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    <FilesMatch "\.(css|js|svg|png|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "^sw\.js$">
+        Header set Cache-Control "no-cache"
+        Header set Service-Worker-Allowed "/"
+    </FilesMatch>
+</IfModule>

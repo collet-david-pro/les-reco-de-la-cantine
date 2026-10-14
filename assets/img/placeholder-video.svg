@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <rect width="200" height="300" fill="#FEE2E2"/>
+  <rect x="48" y="92" width="104" height="72" rx="18" fill="none" stroke="#991B1B" stroke-width="8"/><path d="M90 110v36l30-18Z" fill="#991B1B"/>
+  <text x="100" y="215" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700" fill="#991B1B">Vidéo</text>
+</svg>
