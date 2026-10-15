@@ -45,6 +45,7 @@ Chacun a **son compte** et **sa liste**. Quand quelqu'un recommande un contenu, 
 | 📰 **Quoi de neuf** | Le fil des dernières recommandations, notes et commentaires du groupe. |
 | 📱 **Comme une appli** | Pensé pour le téléphone, installable sur l'écran d'accueil (Android et iPhone). |
 | 🛠️ **Administration** | Comptes des amis, réglages, sauvegarde et restauration en un clic, mode maintenance, diagnostic, données de démo. |
+| 🔔 **Toujours à jour** | Le site prévient l'administrateur quand une nouvelle version sort, avec la marche à suivre. |
 
 **Sans intelligence artificielle** et sans recommandation algorithmique : seulement les conseils des copains.
 Pas de publicité, pas de pistage, vos données restent sur **votre** serveur.
@@ -194,15 +195,24 @@ Le site s'installe très bien sur un serveur [YunoHost](https://yunohost.org/) a
 
 ## 🔄 Mettre à jour
 
-Vos données et votre configuration vivent dans `data/`, qui ne fait **jamais** partie des archives : une mise à jour ne les touche pas.
+🔔 **Pas besoin de surveiller GitHub** : quand une nouvelle version sort, un bandeau apparaît pour les administrateurs.
+*Administration › Mises à jour* affiche alors les nouveautés, la marche à suivre et le lien de téléchargement.
+Rien ne s'installe tout seul : c'est vous qui gardez la main.
 
-1. **Administration › Sauvegarde** : téléchargez une sauvegarde, par prudence.
-2. **Administration** : activez le **mode maintenance** (vos amis voient une page « On remet un peu d'ordre en cuisine », vous gardez l'accès).
-3. Téléchargez la nouvelle release et envoyez les fichiers **par-dessus** les anciens, sans toucher à `data/`. Supprimez ensuite `install.php`.
-4. Si la nouvelle version modifie la base, le site vous propose **Mettre à jour la base** : un clic.
-5. Désactivez le mode maintenance.
+La marche à suivre tient en 6 étapes (5 minutes) :
 
+1. 💾 **Sauvegarde** : *Administration › Sauvegarde › Télécharger une sauvegarde*.
+2. 🚧 **Maintenance** : *Administration › Activer la maintenance* (vos amis voient une page d'attente).
+3. 📦 **Téléchargement** de `cantine-vX.Y.Z.zip` depuis la [dernière release](../../releases/latest).
+4. ⬆️ **Envoi des fichiers par-dessus les anciens** (choisissez « Écraser »), sans toucher au dossier `data/`. Supprimez ensuite `install.php`.
+5. 🗄️ **Base de données** : si le site affiche « Mise à jour de la base nécessaire », cliquez sur **Mettre à jour la base**.
+6. 🍽️ **Réouverture** : *Administration › Rouvrir le site*.
+
+Vous avez sauté plusieurs versions ? Installez directement la dernière : les mises à jour de la base s'enchaînent dans l'ordre.
+Le détail est dans [`MISE-A-JOUR.md`](MISE-A-JOUR.md) (aussi présent dans l'archive) et dans les notes de chaque release.
 Le [`CHANGELOG.md`](CHANGELOG.md) indique pour chaque version si une mise à jour de la base est incluse.
+
+> 🕵️ **Vie privée** : pour savoir si une nouvelle version existe, le serveur interroge GitHub au plus une fois par jour (seulement quand un administrateur ouvre le tableau de bord). Aucune donnée du site n'est envoyée. Pour désactiver : `'check_updates' => false` dans `data/config.php`.
 
 ## 💾 Sauvegarder et restaurer
 
@@ -252,6 +262,7 @@ Site dans un sous-dossier ? Préfixez les chemins : `^/cantine/(app|migrations|d
 | `trust_proxy` | `true` si le site est derrière un proxy inverse qui transmet `X-Forwarded-Proto` / `X-Forwarded-For`. |
 | `timezone` | Fuseau d'affichage des dates (`Europe/Paris` par défaut). |
 | `session_idle` | Déconnexion après inactivité, en secondes (2 h par défaut). La case « Rester connecté » garde la session 30 jours. |
+| `check_updates` | `false` pour ne plus vérifier chaque jour sur GitHub si une nouvelle version existe (`true` par défaut, même si l'option est absente). |
 | `debug` | `true` pour afficher le détail des erreurs. **À ne jamais laisser activé en ligne.** |
 
 </details>
@@ -341,8 +352,15 @@ php tests/run.php                       # SQLite
 CANTINE_TEST_MYSQL="host=127.0.0.1;name=cantine_test;user=root;password=" php tests/run.php   # SQLite + MySQL
 ```
 
-**Publier une version** : mettez à jour `VERSION` et `CHANGELOG.md`, lancez les tests sur les deux moteurs, puis `tools/build-release.sh`.
-L'archive `dist/cantine-vX.Y.Z.zip` (sans `data/`, tests, outils, documentation de travail) est à joindre à la release GitHub.
+**Publier une version** : mettez à jour `VERSION` et `CHANGELOG.md` (en précisant « Mise à jour de la base : oui/non »), lancez les tests sur les deux moteurs, puis :
+
+```bash
+tools/build-release.sh
+gh release create vX.Y.Z dist/cantine-vX.Y.Z.zip --title "vX.Y.Z" --notes-file dist/notes-vX.Y.Z.md
+```
+
+Le script produit l'archive (sans `data/`, tests, outils ni documentation de travail) et les notes de release (section du CHANGELOG + tutoriel de mise à jour).
+Les sites installés verront la nouvelle version dans les 24 heures.
 
 **Une faille de sécurité ?** Merci de ne pas ouvrir de ticket public : utilisez l'onglet **Security › Report a vulnerability** du dépôt.
 

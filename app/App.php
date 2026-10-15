@@ -172,6 +172,10 @@ final class App
             'newCount' => $newCount,
             'maintenanceOn' => self::$settings !== null && self::$settings->bool('maintenance'),
             'demoLoaded' => self::$settings !== null && self::$settings->bool('demo_loaded'),
+            // Nouvelle version (admins seulement) : lecture des réglages, aucun appel réseau ici.
+            'updateAvailable' => $user !== null && $user['role'] === 'admin' && self::$settings !== null && self::updatesEnabled()
+                ? (new Services\UpdateChecker(self::$settings, new Services\HttpClient()))->available()
+                : null,
         ];
     }
 
@@ -245,6 +249,12 @@ final class App
         self::$db = $db;
         self::$settings = new Settings($db);
         self::$auth = $auth;
+    }
+
+    /** Notification de nouvelle version : activée sauf 'check_updates' => false dans config.php. */
+    public static function updatesEnabled(): bool
+    {
+        return (self::$config['check_updates'] ?? true) !== false;
     }
 
     public static function siteName(): string

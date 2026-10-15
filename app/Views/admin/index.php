@@ -12,6 +12,8 @@
     <li><strong><?= (int) $counts['comments'] ?></strong><span><?= e(t_plural('admin.comments', $counts['comments'])) ?></span></li>
 </ul>
 
+<?= partial('admin/updates', ['updates' => $updates]) ?>
+
 <section class="panel">
     <h2 class="section-title"><?= e(t('admin.maintenance')) ?></h2>
     <p><?= e($maintenance ? t('admin.maintenance_is_on') : t('admin.maintenance_is_off')) ?></p>

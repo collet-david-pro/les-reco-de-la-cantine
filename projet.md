@@ -2,7 +2,7 @@
 
 > Nom du site : **Les reco de la cantine** (dossier de travail : Filmo).
 > Document de cadrage destiné aux agents IA qui travailleront sur ce projet.
-> Statut : **version 0.1.0 en ligne** sur le serveur YunoHost du propriétaire (14/10/2026), fonctionnement validé. Un point de sécurité reste ouvert (protection de `data/` sous nginx) : voir sections 10 et 13.
+> Statut : **version 0.2.0 publiée** (notification de nouvelle version), **0.1.0 en ligne** sur le serveur YunoHost du propriétaire (14/10/2026), fonctionnement validé. Un point de sécurité reste ouvert (protection de `data/` sous nginx) : voir sections 10 et 13.
 
 <!--
 NOTE AUX AGENTS IA
@@ -449,6 +449,24 @@ AGENTS — Installeur
 - Procédure : activer le mode maintenance, téléverser le nouveau code, appliquer les migrations, désactiver le mode maintenance (documentée dans le README).
 - **Migrations versionnées** (version du schéma stockée en base), appliquées automatiquement ou via un bouton admin.
 - La mise à jour **ne doit jamais écraser** `config.php`, la base SQLite ni les données : ces éléments sont hors du code livré.
+- **Notification de nouvelle version** (VALIDÉ le 15/10/2026) : l'administrateur est prévenu dans le site quand une nouvelle release est publiée sur GitHub, avec un lien vers la release et son tutoriel de mise à jour. **Pas de mise à jour automatique** : le propriétaire continue de téléverser les fichiers lui-même.
+- Chaque release GitHub contient un **tutoriel de mise à jour** (dans les notes de version et dans le fichier `MISE-A-JOUR.md` de l'archive).
+
+<!--
+AGENTS — Notification de mise à jour
+- Services/UpdateChecker.php : appel à https://api.github.com/repos/<propriétaire>/<dépôt>/releases/latest (adresse déduite de
+  CANTINE_REPO_URL), au plus une fois par 24 h, déclenché à l'ouverture du tableau de bord admin (jamais pour les membres),
+  + bouton "Vérifier maintenant". Résultat stocké dans settings (update_latest, update_checked_at, update_error), y compris les échecs,
+  pour ne pas relancer l'appel à chaque page. Ces réglages sont propres à l'instance : exclus des sauvegardes.
+- Bandeau discret pour les admins sur toutes les pages + encart dans le tableau de bord (version installée / disponible,
+  notes en texte brut échappé, liens vers la release et l'archive .zip). Membres : rien.
+- Désactivable : 'check_updates' => false dans data/config.php (vie privée : l'appel révèle l'IP du serveur à GitHub).
+- Mise à jour en un clic (téléchargement + remplacement des fichiers par PHP) : ÉCARTÉE pour l'instant (risques : signature des archives,
+  fichiers non inscriptibles, mélange de versions via OPcache). Ne pas la développer sans nouvelle demande.
+- tools/build-release.sh génère aussi dist/notes-vX.Y.Z.md = section du CHANGELOG + MISE-A-JOUR.md, à utiliser comme notes de release.
+- Sauts de version : les migrations s'enchaînent, donc installer directement la dernière version suffit. Si un jour une version exige
+  une étape intermédiaire, le dire en tête des notes de release ET dans MISE-A-JOUR.md.
+-->
 
 <!--
 AGENTS — Migrations
@@ -734,7 +752,7 @@ AGENTS — Mise en œuvre de la sécurité
 
 Aucune. Le nom, la taille, l'hébergement, la stack, la sécurité, le thème (clair), la licence (MIT), la langue (français), la sauvegarde (JSON) et le périmètre fonctionnel sont décidés.
 
-Écartés volontairement (ne pas développer sans nouvelle demande) : mot d'accompagnement de l'ajouteur, statistiques et classements du groupe, export CSV personnel, rappel de sauvegarde, journal d'activité admin.
+Écartés volontairement (ne pas développer sans nouvelle demande) : mot d'accompagnement de l'ajouteur, statistiques et classements du groupe, export CSV personnel, rappel de sauvegarde, journal d'activité admin, mise à jour automatique « en un clic » (seule la notification de nouvelle version est retenue, section 6).
 
 <!--
 AGENTS — Points tranchés par le propriétaire (anciennement "À VALIDER") :
@@ -845,4 +863,12 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
     (doit renvoyer 403 ou 404).
   - Solutions : voir le point "À VALIDER" en section 10. En attendant, éviter les sauvegardes de sécurité sur le serveur
     (elles sont créées à chaque restauration) et préférer MySQL à SQLite.
+
+**Version 0.2.0 (15/10/2026)**
+- Notification de nouvelle version pour les administrateurs (section 6) : bandeau + encart *Administration › Mises à jour*,
+  vérification GitHub au plus une fois par 24 h, testée contre le vrai dépôt. Pas de mise à jour automatique (écartée).
+- Tutoriel de mise à jour : `MISE-A-JOUR.md` (dans l'archive) + notes de chaque release (générées par `tools/build-release.sh`).
+- Correctifs d'affichage mobile (résultats de recherche, « Recommandé par »).
+- Le serveur du propriétaire est en 0.1.0, qui ne contient pas encore la notification : cette première mise à jour vers 0.2.0
+  se fait en suivant le tutoriel ; les suivantes seront signalées automatiquement.
 

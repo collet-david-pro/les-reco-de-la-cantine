@@ -398,6 +398,7 @@ final class Installer
             'trust_proxy' => false,
             'timezone' => 'Europe/Paris',
             'session_idle' => 7200,
+            'check_updates' => true,
             'debug' => false,
         ];
         return "<?php\n"
@@ -410,6 +411,7 @@ final class Installer
             . " * - trust_proxy  : true si le site est derrière un proxy inverse qui transmet X-Forwarded-Proto / X-Forwarded-For.\n"
             . " * - timezone     : fuseau horaire d'affichage des dates.\n"
             . " * - session_idle : durée d'inactivité (secondes) avant déconnexion, hors « Rester connecté ».\n"
+            . " * - check_updates : false pour ne pas vérifier chaque jour sur GitHub si une nouvelle version existe.\n"
             . " * - debug        : true pour afficher le détail des erreurs (à ne jamais laisser en production).\n"
             . " */\n"
             . "defined('CANTINE') || exit;\n\n"

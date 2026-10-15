@@ -41,7 +41,7 @@ final class Backup
     ];
 
     /** Réglages jamais restaurés depuis une sauvegarde (propres à l'instance en cours). */
-    private const LOCAL_SETTINGS = ['schema_version', 'maintenance'];
+    private const LOCAL_SETTINGS = ['schema_version', 'maintenance', 'update_latest', 'update_checked_at', 'update_error'];
 
     /** Réglages secrets, exclus de l'export par défaut. */
     public const SECRET_SETTINGS = ['tmdb_key', 'rawg_key'];

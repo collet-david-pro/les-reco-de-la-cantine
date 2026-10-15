@@ -49,6 +49,12 @@ $routeGroup = explode('/', $currentRoute)[0];
         <?= e(t('banner.maintenance')) ?> <a href="<?= e(url('admin')) ?>"><?= e(t('banner.maintenance_link')) ?></a>
     </div>
 <?php endif; ?>
+<?php if (!empty($updateAvailable) && $currentRoute !== 'admin'): ?>
+    <div class="banner banner-update" role="status">
+        <?= e(t('updates.banner', ['version' => $updateAvailable['version']])) ?>
+        <a href="<?= e(url('admin')) ?>#mises-a-jour"><?= e(t('updates.banner_link')) ?></a>
+    </div>
+<?php endif; ?>
 <?php if ($demoLoaded): ?>
     <div class="banner banner-info" role="status"><?= e(t('banner.demo')) ?></div>
 <?php endif; ?>

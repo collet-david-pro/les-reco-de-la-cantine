@@ -33,3 +33,20 @@ if unzip -l "$ZIP" | grep -E "data/|config\.php|\.sqlite|projet\.md" > /dev/null
 fi
 
 echo "Archive créée : $ZIP ($(du -h "$ZIP" | cut -f1))"
+
+# Notes de release : section du CHANGELOG pour cette version + tutoriel de mise à jour.
+NOTES="$DIST/notes-v$VERSION.md"
+{
+    awk -v v="$VERSION" '
+        $0 ~ "^## \\[" v "\\]" { found = 1; next }
+        found && /^## \[/ { exit }
+        found { print }
+    ' "$ROOT/CHANGELOG.md"
+    echo
+    echo "---"
+    echo
+    cat "$ROOT/MISE-A-JOUR.md"
+    echo
+    echo "**Première installation ?** Suivez le [tutoriel d'installation](https://github.com/collet-david-pro/les-reco-de-la-cantine#-tutoriel--installer-le-site-en-15-minutes)."
+} > "$NOTES"
+echo "Notes de release : $NOTES"

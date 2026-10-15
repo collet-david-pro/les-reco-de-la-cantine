@@ -25,6 +25,7 @@ class HttpClient
         'api.rawg.io',
         'api.deezer.com',
         'www.youtube.com',
+        'api.github.com', // notification de nouvelle version
     ];
 
     public const TTL_SEARCH = 86400;     // 24 h

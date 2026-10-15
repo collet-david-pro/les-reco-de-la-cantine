@@ -82,6 +82,7 @@ return [
     // Administration
     'GET admin' => [AdminController::class, 'index', 'admin'],
     'POST admin/maintenance' => [AdminController::class, 'toggleMaintenance', 'admin'],
+    'POST admin/mises-a-jour/verifier' => [AdminController::class, 'checkUpdates', 'admin'],
     'GET admin/diagnostic' => [AdminController::class, 'diagnostics', 'admin'],
     'GET admin/migrations' => [AdminController::class, 'migrationsForm', 'admin'],
     'POST admin/migrations' => [AdminController::class, 'migrate', 'admin'],

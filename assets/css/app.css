@@ -527,3 +527,16 @@ a.chip:hover { background: var(--accent-soft); color: var(--accent-hover); }
 .toast-container { position: fixed; left: 16px; right: 16px; bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + 12px); z-index: 50; margin: 0; }
 .toast { box-shadow: var(--shadow-strong); }
 @media (min-width: 900px) { .toast-container { left: auto; right: 24px; bottom: 24px; max-width: 380px; } }
+
+/* Notification de nouvelle version */
+.banner-update { background: var(--accent-soft); color: var(--accent-hover); }
+.banner-update a { font-weight: 600; }
+.panel-update { border: 2px solid var(--accent); }
+.update-headline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 1.05rem; }
+.update-notes { margin: 0 0 12px; }
+.update-notes summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+.update-notes-text { background: var(--surface-2); border-radius: var(--radius-small); padding: 12px; font-size: .92rem; overflow-wrap: anywhere; max-height: 320px; overflow-y: auto; }
+.update-steps { padding-left: 1.3em; margin: 0 0 14px; }
+.update-steps li { margin-bottom: 4px; }
+.update-check { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 12px; }
+.update-check .hint { margin: 0; }

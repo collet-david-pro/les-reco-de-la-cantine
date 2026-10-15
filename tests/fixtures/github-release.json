@@ -1,0 +1,16 @@
+{
+ "html_url": "https://github.com/collet-david-pro/les-reco-de-la-cantine/releases/tag/v9.1.0",
+ "tag_name": "v9.1.0",
+ "name": "v0.1.0 — Première version",
+ "draft": false,
+ "prerelease": false,
+ "published_at": "2026-10-14T16:10:52Z",
+ "body": "## 🍲 Première version !\n\nLe site privé où votre bande d'amis se recommande **films, séries, livres, jeux vidéo, vidéos YouTube et musiques**.\n\n### 📦 Installation\n1. Téléchargez **`cantine-v0.1.0.zip`** ci-dessous (et non « Source code »).\n2. Envoyez le contenu du dossier `les-reco-de-la-cantine/` sur votre hébergement PHP 8.1+.\n3. Ouvrez `https://votre-site/install.php` et laissez-vous guider.\n\n👉 Le [tutoriel complet](https://github.com/collet-david-pro/les-reco-de-la-cantine#-tutoriel--installer-le-site-en-15-minutes) est dans le README.\n⚠️ Sous **nginx** (VPS, YunoHost…), pensez à la règle qui protège le dossier `data/` (étape 4 du tutoriel), puis vérifiez *Administration › Diagnostic*.\n\n### ✨ Au menu\n- Installeur en 3 étapes : MySQL/MariaDB ou SQLite, messages d'erreur en clair\n- Recherche automatique : TMDB (films, séries), Open Library (livres), RAWG (jeux), Deezer (albums, morceaux), YouTube (lien collé) ; ajout manuel avec détection des doublons\n- Ma liste : À découvrir / En cours / Vu / Pas pour moi, notes de 1 à 5, filtres, tris, recherche, badge « nouveau »\n- Fiches : infos pratiques, bande-annonce, « Où regarder » (JustWatch), liens librairies, avis du groupe, commentaires avec spoiler\n- Fil « Quoi de neuf », profils, tirage au sort « Que regarder ce soir ? »\n- Administration : membres, réglages et clés d'API, sauvegarde/restauration JSON portable (MySQL ↔ SQLite), diagnostic, maintenance, données de démo\n- Appli installable sur téléphone (PWA)\n\n**Mise à jour de la base** : création initiale (migration `001_init`).\n",
+ "assets": [
+  {
+   "name": "cantine-v9.1.0.zip",
+   "browser_download_url": "https://github.com/collet-david-pro/les-reco-de-la-cantine/releases/download/v9.1.0/cantine-v9.1.0.zip",
+   "size": 218303
+  }
+ ]
+}

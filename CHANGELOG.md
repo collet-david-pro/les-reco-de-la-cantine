@@ -3,6 +3,20 @@
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/). Numérotation [semver](https://semver.org/lang/fr/).
 Chaque version indique si elle contient une **mise à jour de la base** (bouton « Mettre à jour la base » après téléversement).
 
+## [0.2.0] — 2026-10-15
+
+**Mise à jour de la base : non** (simple remplacement des fichiers).
+
+### Ajouté
+- 🔔 **Notification de nouvelle version** : quand une nouvelle release est publiée sur GitHub, les administrateurs voient un bandeau
+  et, dans *Administration › Mises à jour*, les nouveautés, la marche à suivre et le lien de téléchargement. Vérification au plus une fois
+  par jour, bouton « Vérifier maintenant », désactivable avec `'check_updates' => false` dans `data/config.php`. Rien ne s'installe tout seul.
+- 📖 Tutoriel de mise à jour dans chaque release et dans le fichier `MISE-A-JOUR.md` de l'archive.
+
+### Corrigé
+- Sur mobile, les résultats de recherche ne débordent plus de l'écran (le bouton « Choisir » était masqué).
+- Sur la fiche d'un contenu, « Recommandé par … le … » ne se découpe plus en colonnes.
+
 ## [0.1.0] — 2026-10-14
 
 Première version, à valider par le propriétaire avant publication.
