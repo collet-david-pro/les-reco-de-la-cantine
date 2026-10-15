@@ -47,7 +47,7 @@ final class AdminController extends Controller
             'demoLoaded' => $demo->isLoaded(),
             'demoActivity' => $demo->isLoaded() ? $demo->realActivityOnDemo() : ['statuses' => 0, 'comments' => 0],
             'demoCredentials' => $_SESSION['_demo_credentials'] ?? null,
-            'missingKeys' => $this->settings->get('tmdb_key') === '' || $this->settings->get('rawg_key') === '',
+            'missingKeys' => $this->settings->get('tmdb_key') === '', // les jeux fonctionnent sans clé (Steam)
             'updates' => $updates,
         ]);
     }

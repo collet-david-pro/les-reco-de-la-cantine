@@ -9,7 +9,9 @@ namespace Cantine\Controllers\Admin;
 defined('CANTINE') || exit;
 
 use Cantine\Controllers\Controller;
+use Cantine\Services\Api\Igdb;
 use Cantine\Services\Api\Rawg;
+use Cantine\Services\Api\Sources;
 use Cantine\Services\Api\Tmdb;
 use Cantine\Services\ApiException;
 use Cantine\Services\HttpClient;
@@ -25,12 +27,30 @@ final class SettingsController extends Controller
         return $this->view('admin/settings', [
             'title' => t('settings.title'),
             'siteName' => $this->settings->get('site_name'),
-            'tmdbMasked' => self::mask($this->settings->get('tmdb_key')),
-            'rawgMasked' => self::mask($this->settings->get('rawg_key')),
+            'masked' => $this->maskedKeys(),
+            'gameSource' => $this->gameSource(),
             'region' => $this->settings->get('watch_region', 'FR'),
             'shopText' => self::shopText($this->settings->json('shop_links', ShopLinks::DEFAULTS)),
             'errors' => [],
         ]);
+    }
+
+    /** Clés et identifiants d'API modifiables dans les réglages. */
+    public const KEYS = ['tmdb_key', 'rawg_key', 'igdb_client_id', 'igdb_client_secret'];
+
+    /** Source actuellement utilisée pour rechercher les jeux (igdb, rawg ou steam). */
+    private function gameSource(): string
+    {
+        return (new Sources($this->settings, new HttpClient($this->db)))->forType('jeu')?->name() ?? 'steam';
+    }
+
+    private function maskedKeys(): array
+    {
+        $masked = [];
+        foreach (self::KEYS as $name) {
+            $masked[$name] = self::mask($this->settings->get($name));
+        }
+        return $masked;
     }
 
     /** Seuls les 4 derniers caractères sont affichés. La clé n'est jamais renvoyée au navigateur. */
@@ -51,18 +71,24 @@ final class SettingsController extends Controller
         $this->settings->set('site_name', $siteName);
 
         // Clés : un champ vide = inchangé ; la case "supprimer" efface la clé.
-        foreach (['tmdb_key', 'rawg_key'] as $name) {
+        foreach (self::KEYS as $name) {
+            $before = $this->settings->get($name);
             if (Request::postBool('remove_' . $name)) {
                 $this->settings->set($name, '');
-                continue;
-            }
-            $value = Request::post($name);
-            if ($value !== '') {
-                if (strlen($value) > 400 || !preg_match('/^[A-Za-z0-9._-]+$/', $value)) {
-                    $errors[] = t('settings.key_invalid');
-                } else {
-                    $this->settings->set($name, $value);
+            } else {
+                $value = Request::post($name);
+                if ($value !== '') {
+                    if (strlen($value) > 400 || !preg_match('/^[A-Za-z0-9._-]+$/', $value)) {
+                        $errors[] = t('settings.key_invalid');
+                    } else {
+                        $this->settings->set($name, $value);
+                    }
                 }
+            }
+            // Identifiants IGDB modifiés : l'ancien jeton d'accès n'est plus valable.
+            if (str_starts_with($name, 'igdb_') && $before !== $this->settings->get($name)) {
+                $this->settings->set('igdb_token', '');
+                $this->settings->set('igdb_token_expires', '0');
             }
         }
 
@@ -84,8 +110,9 @@ final class SettingsController extends Controller
             return $this->view('admin/settings', [
                 'title' => t('settings.title'),
                 'siteName' => $siteName,
-                'tmdbMasked' => self::mask($this->settings->get('tmdb_key')),
-                'rawgMasked' => self::mask($this->settings->get('rawg_key')),
+                'masked' => $this->maskedKeys(),
+                'gameSource' => $this->gameSource(),
+            'gameSource' => $this->gameSource(),
                 'region' => $region,
                 'shopText' => Request::post('shop_links'),
                 'errors' => $errors,
@@ -105,6 +132,8 @@ final class SettingsController extends Controller
                 (new Tmdb($http, $this->settings->get('tmdb_key')))->testKey();
             } elseif ($which === 'rawg') {
                 (new Rawg($http, $this->settings->get('rawg_key')))->testKey();
+            } elseif ($which === 'igdb') {
+                (new Igdb($http, $this->settings, $this->settings->get('igdb_client_id'), $this->settings->get('igdb_client_secret')))->testKey();
             } else {
                 return $this->redirect('admin/reglages');
             }

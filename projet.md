@@ -547,7 +547,7 @@ Appels faits **par le serveur PHP** (cURL), jamais depuis le navigateur.
 |---|---|---|---|
 | Films, séries | **TMDB** | Clé gratuite | Usage non commercial gratuit, **attribution TMDB obligatoire**. Affiche, synopsis, genres, durée, saisons, bande-annonce, ID IMDb, **« où regarder »**. |
 | Livres | **Open Library** | Aucune | Couverture, auteur, pages, sujets, **ISBN**. Pas de Google Books. |
-| Jeux vidéo | **RAWG** (alt. IGDB) | Clé gratuite | Jaquette, genres, plateformes, année. |
+| Jeux vidéo | **Steam** par défaut ; **IGDB** ou **RAWG** en option | Aucune (Steam) ; gratuites (IGDB : identifiants Twitch, RAWG : clé) | Jaquette, genres, plateformes, année, studio. Priorité : IGDB > RAWG > Steam (VALIDÉ le 15/10/2026). |
 | Musique | **Deezer** API publique | Aucune | **Source principale** : recherche d'albums et de morceaux, pochettes, **lien d'écoute** Deezer. |
 | YouTube | **oEmbed** YouTube | Aucune | L'utilisateur colle l'URL ; titre, chaîne, miniature. |
 
@@ -606,6 +606,19 @@ AGENTS — Musique
   - Vérifier le domaine réel des pochettes renvoyées pour la CSP img-src.
 - MusicBrainz n'est plus nécessaire. Ne pas l'implémenter, sauf demande ultérieure.
 - Laisser choisir "Album" ou "Morceau" dans l'écran d'ajout musique.
+
+AGENTS — Steam (jeux, source par défaut, VALIDÉ le 15/10/2026)
+- API publique de la boutique, sans clé : /api/storesearch/?term=…&l=french&cc=FR et /api/appdetails?appids=…&l=french&cc=FR.
+- Jaquette verticale : shared.akamai.steamstatic.com/store_item_assets/steam/apps/{appid}/library_600x900.jpg, vérifiée par une
+  requête HEAD (HttpClient::urlExists) au moment de l'ajout ; sinon header_image (bannière).
+- Limite connue : jeux vendus sur Steam (PC). Les exclusivités console passent par IGDB/RAWG ou l'ajout manuel.
+
+AGENTS — IGDB (jeux, option, VALIDÉ le 15/10/2026)
+- Identifiants d'une application Twitch (client id + secret) dans settings (secrets, exclus des sauvegardes par défaut).
+- Jeton : POST https://id.twitch.tv/oauth2/token (client_credentials), gardé dans settings (igdb_token, igdb_token_expires : propres
+  à l'instance, jamais sauvegardés), renouvelé à l'expiration ou sur réponse 401.
+- Requêtes : POST https://api.igdb.com/v4/games en Apicalypse ; jaquettes images.igdb.com (t_cover_small / t_cover_big).
+- Genres en anglais : table de traduction dans Igdb.php.
 
 AGENTS — YouTube
 - L'utilisateur colle une URL. Accepter : youtube.com/watch?v=ID, youtu.be/ID, youtube.com/shorts/ID,
@@ -838,7 +851,7 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 - Dépôt GitHub **public** : https://github.com/collet-david-pro/les-reco-de-la-cantine — release `v0.1.0` publiée le 14/10/2026 avec l'archive `.zip`.
   README réécrit en tutoriel (captures dans `docs/captures/`, exclues de l'archive). Signalement des failles : onglet Security du dépôt.
 - **Liens boutiques par défaut** : Place des Libraires vérifié (réponse 200) ; Amazon et Fnac bloquent les robots, à vérifier dans un navigateur.
-- Tester la PWA sur un vrai téléphone Android et iOS (nécessite HTTPS), et les clés TMDB/RAWG réelles (les connecteurs sont testés sur des réponses enregistrées).
+- Tester la PWA sur un vrai téléphone Android et iOS (nécessite HTTPS), et les clés TMDB/IGDB/RAWG réelles (les connecteurs sont testés sur des réponses enregistrées ; Steam a été testé en réel).
 
 **Choix faits en l'absence de règle (simples et réversibles)**
 - CSP `img-src 'self' data: https:` au lieu d'une liste de domaines : les jaquettes d'ajout manuel peuvent venir de n'importe quel site https.
@@ -871,4 +884,11 @@ scénario de fin d'étape 2 rejoué, sauvegarde MySQL restaurée sous SQLite par
 - Correctifs d'affichage mobile (résultats de recherche, « Recommandé par »).
 - Le serveur du propriétaire est en 0.1.0, qui ne contient pas encore la notification : cette première mise à jour vers 0.2.0
   se fait en suivant le tutoriel ; les suivantes seront signalées automatiquement.
+
+**Version 0.3.0 (15/10/2026)**
+- Jeux : Steam par défaut (sans clé, testé en réel), IGDB en option (identifiants Twitch), RAWG devenu facultatif ;
+  plus d'alerte admin pour la clé RAWG (seule TMDB est signalée).
+- Bouton « Installer l'appli » pour tous sur mobile (accueil, avec « Plus tard » 30 jours ; profil) : beforeinstallprompt sur
+  Android/Chrome, explications sur iPhone, masqué en mode installé et sur ordinateur. Vérifié en simulation iPhone ;
+  l'installation réelle sur téléphone reste à valider (HTTPS nécessaire).
 

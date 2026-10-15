@@ -540,3 +540,23 @@ a.chip:hover { background: var(--accent-soft); color: var(--accent-hover); }
 .update-steps li { margin-bottom: 4px; }
 .update-check { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 12px; }
 .update-check .hint { margin: 0; }
+
+/* Bouton "Installer l'appli" (PWA) */
+.install-app {
+    display: grid; grid-template-columns: 48px 1fr; gap: 10px 14px; align-items: center;
+    background: var(--surface); border: 2px solid var(--accent-soft); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 14px var(--space); margin-bottom: var(--space);
+}
+.install-icon { border-radius: 12px; }
+.install-text h2 { font-size: 1.05rem; margin: 0 0 2px; }
+.install-text p { margin: 0; color: var(--muted); font-size: .92rem; }
+.install-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.install-dialog {
+    border: 0; border-radius: var(--radius); padding: 20px var(--space); width: min(92vw, 420px);
+    box-shadow: var(--shadow-strong); color: var(--text); background: var(--surface);
+}
+.install-dialog::backdrop { background: rgba(43, 38, 34, .5); }
+.install-dialog h2 { font-size: 1.15rem; }
+.install-steps { padding-left: 1.3em; margin: 0 0 10px; }
+.install-steps li { margin-bottom: 8px; }
+.ios-share { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; background: var(--info-soft); color: var(--info); vertical-align: middle; }

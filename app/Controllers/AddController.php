@@ -67,6 +67,7 @@ final class AddController extends Controller
             'query' => $query,
             'kind' => $kind,
             'available' => $source !== null && $source->isAvailable(),
+            'sourceName' => $source?->name(),
             'results' => $query !== '' ? $this->runSearch($type, $query, $kind, $source) : null,
         ]);
     }

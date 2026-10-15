@@ -34,7 +34,7 @@ Chacun a **son compte** et **sa liste**. Quand quelqu'un recommande un contenu, 
 
 | | |
 |---|---|
-| 🔎 **Recommander en 3 clics** | Choisissez le type, tapez un titre, sélectionnez : jaquette, année, genres, durée, auteur… tout est rempli automatiquement. Un lien YouTube collé suffit pour une vidéo. |
+| 🔎 **Recommander en 3 clics** | Choisissez le type, tapez un titre, sélectionnez : jaquette, année, genres, durée, auteur… tout est rempli automatiquement. Un lien YouTube collé suffit pour une vidéo. Livres, musique, vidéos et jeux PC fonctionnent **sans aucune clé**. |
 | ✍️ **Ajout manuel** | Rien trouvé ? Un formulaire simple prend le relais, avec détection des doublons. |
 | 📋 **Ma liste** | Quatre statuts : *À découvrir*, *En cours*, *Vu* (ou *Lu*, *Joué*, *Écouté*), *Pas pour moi*. Filtres, tris, recherche, badge « nouveau ». |
 | ⭐ **Notes de 1 à 5** | Facultatives, visibles de tous, avec la moyenne du groupe. |
@@ -43,7 +43,7 @@ Chacun a **son compte** et **sa liste**. Quand quelqu'un recommande un contenu, 
 | 📚 **Où trouver le livre ?** | Liens vers Amazon, la Fnac et une librairie indépendante (configurables). |
 | 🎲 **Que regarder ce soir ?** | Un tirage au sort dans votre liste, par type et par genre. |
 | 📰 **Quoi de neuf** | Le fil des dernières recommandations, notes et commentaires du groupe. |
-| 📱 **Comme une appli** | Pensé pour le téléphone, installable sur l'écran d'accueil (Android et iPhone). |
+| 📱 **Comme une appli** | Pensé pour le téléphone : un bouton « Installer l'appli » le place sur l'écran d'accueil (Android et iPhone). |
 | 🛠️ **Administration** | Comptes des amis, réglages, sauvegarde et restauration en un clic, mode maintenance, diagnostic, données de démo. |
 | 🔔 **Toujours à jour** | Le site prévient l'administrateur quand une nouvelle version sort, avec la marche à suivre. |
 
@@ -131,11 +131,19 @@ Vous pouvez aussi ouvrir `https://votre-site/data/.probe` : vous devez obtenir u
 
 ### Étape 5 — Brancher les recherches automatiques
 
-Les **livres** (Open Library), la **musique** (Deezer) et **YouTube** fonctionnent tout de suite, sans rien configurer.
-Pour les **films, séries** et **jeux vidéo**, il faut deux clés gratuites (5 minutes chacune) :
+Sans rien configurer, la recherche fonctionne déjà pour :
+
+| | Source | Clé |
+|---|---|---|
+| 📚 Livres | Open Library | aucune |
+| 🎵 Musique | Deezer | aucune |
+| ▶️ Vidéos | YouTube (lien collé) | aucune |
+| 🎮 Jeux PC | Steam | aucune |
+| 🎬 Films et séries | TMDB | **gratuite, à demander** |
+| 🎮 Jeux console | IGDB (conseillé) ou RAWG | facultative, gratuite |
 
 <details>
-<summary><b>🎬 Obtenir la clé TMDB (films et séries)</b></summary>
+<summary><b>🎬 Obtenir la clé TMDB (films et séries) — conseillé</b></summary>
 
 1. Créez un compte sur [themoviedb.org](https://www.themoviedb.org/signup) et confirmez votre e-mail.
 2. Allez dans votre profil › **Paramètres › API**, puis demandez une clé pour un usage **personnel**.
@@ -145,11 +153,18 @@ Pour les **films, séries** et **jeux vidéo**, il faut deux clés gratuites (5 
 </details>
 
 <details>
-<summary><b>🎮 Obtenir la clé RAWG (jeux vidéo)</b></summary>
+<summary><b>🎮 Trouver aussi les jeux console avec IGDB — facultatif</b></summary>
 
-1. Créez un compte sur [rawg.io](https://rawg.io/signup).
-2. Rendez-vous sur [rawg.io/apidocs](https://rawg.io/apidocs) et cliquez sur **Get API Key**.
-3. Collez la clé dans **Administration › Réglages**, **Enregistrer**, puis **Tester la clé RAWG** → ✔.
+Par défaut, les jeux sont cherchés sur **Steam** (jeux PC). Pour les jeux Nintendo, PlayStation, Xbox…, branchez **IGDB** (la base de jeux de Twitch, gratuite) :
+
+1. Créez un compte sur [twitch.tv](https://www.twitch.tv/) et activez la **double authentification** (*Paramètres › Sécurité et confidentialité*).
+2. Sur [dev.twitch.tv/console](https://dev.twitch.tv/console), cliquez sur **Enregistrer votre application** :
+   nom au choix, URL de redirection OAuth `http://localhost`, catégorie *Website Integration*, type de client *Confidentiel*.
+3. Ouvrez l'application créée : copiez l'**ID client**, puis cliquez sur **Nouveau secret** et copiez le secret.
+4. Collez les deux dans **Administration › Réglages › Jeux vidéo**, **Enregistrer**, puis **Tester la clé IGDB** → ✔.
+
+Le site renouvelle lui-même le jeton d'accès Twitch : rien d'autre à faire.
+Vous préférez [RAWG](https://rawg.io/apidocs) ? Sa clé se colle au même endroit. Ordre utilisé : IGDB, sinon RAWG, sinon Steam.
 
 </details>
 
@@ -168,10 +183,13 @@ Il n'y a pas d'inscription publique : c'est vous qui créez les comptes.
 
 ### Étape 7 — Installer l'appli sur le téléphone
 
-Le site s'installe comme une application, avec son icône sur l'écran d'accueil :
+Sur téléphone, chacun voit un encart **« Installez l'appli »** sur l'accueil (et dans son profil) :
 
-- **Android (Chrome)** : menu ⋮ › **Installer l'application** (ou *Ajouter à l'écran d'accueil*).
-- **iPhone (Safari)** : bouton Partager › **Sur l'écran d'accueil**.
+- **Android (Chrome)** : le bouton ouvre directement la fenêtre d'installation.
+- **iPhone (Safari)** : le bouton explique les 3 gestes (Partager › *Sur l'écran d'accueil* › Ajouter).
+
+L'icône de la cantine rejoint alors les autres applis, et le site s'ouvre en plein écran.
+L'encart disparaît une fois l'appli installée (ou pendant 30 jours après « Plus tard »).
 
 ### 🧪 Envie d'essayer avant d'inviter tout le monde ?
 
@@ -275,6 +293,8 @@ Site dans un sous-dossier ? Préfixez les chemins : `^/cantine/(app|migrations|d
 | « La base de données est injoignable » | Vérifiez les identifiants dans `data/config.php` et que MySQL tourne. |
 | « Le formulaire a expiré » | La page est restée ouverte longtemps : rechargez-la. |
 | La recherche de films ne donne rien | Clé TMDB absente ou refusée : *Réglages › Tester la clé TMDB*. Vérifiez aussi le réseau sortant dans *Diagnostic*. |
+| Un jeu console est introuvable | Par défaut les jeux viennent de Steam (PC). Ajoutez des identifiants IGDB (étape 5) ou faites un ajout manuel. |
+| Pas de bouton « Installer l'appli » | Il n'apparaît que sur téléphone, si l'appli n'est pas déjà installée et si le site est en `https://`. Sinon : menu du navigateur › *Ajouter à l'écran d'accueil*. |
 | Alerte rouge « data/ lisible depuis le web » | Apache : vérifiez que les `.htaccess` sont pris en compte. nginx : ajoutez les règles ci-dessus. |
 | L'appli ne s'installe pas sur le téléphone | Le site doit être en `https://`. |
 | « Trop de tentatives » à la connexion | Après 5 échecs en 15 minutes, l'attente augmente (jusqu'à 15 min). Patientez, ou faites réinitialiser le mot de passe. |
@@ -370,6 +390,6 @@ Les sites installés verront la nouvelle version dans les 24 heures.
 
 - Films et séries : [TMDB](https://www.themoviedb.org/). *Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.*
 - Disponibilités « Où regarder » : [JustWatch](https://www.justwatch.com/), via TMDB.
-- Livres : [Open Library](https://openlibrary.org/) · Jeux vidéo : [RAWG](https://rawg.io/) · Musique : [Deezer](https://www.deezer.com/) · Vidéos : YouTube (oEmbed).
+- Livres : [Open Library](https://openlibrary.org/) · Jeux vidéo : [Steam](https://store.steampowered.com/), [IGDB](https://www.igdb.com/), [RAWG](https://rawg.io/) · Musique : [Deezer](https://www.deezer.com/) · Vidéos : YouTube (oEmbed).
 
 Distribué sous [licence MIT](LICENSE). Bon appétit ! 🍽️

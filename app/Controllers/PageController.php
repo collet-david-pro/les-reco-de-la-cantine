@@ -26,6 +26,7 @@ final class PageController extends Controller
         $name = App::siteName();
         $base = App::baseUrl();
         $manifest = [
+            'id' => $base . 'index.php?route=accueil',
             'name' => $name,
             'short_name' => mb_strlen($name) > 12 ? 'La cantine' : $name,
             'description' => t('pwa.description'),

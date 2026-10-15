@@ -10,6 +10,9 @@ $isMusic = $type === 'musique';
     <a class="link-button" href="<?= e(url('ajouter')) ?>"><?= e(t('add.change_type')) ?></a>
 </div>
 
+<?php if ($available && ($sourceName ?? '') === 'steam'): ?>
+    <p class="hint"><?= e(t('add.steam_hint')) ?></p>
+<?php endif; ?>
 <?php if (!$available): ?>
     <p class="alert alert-info"><?= e(t('add.search_unavailable')) ?> <?= e(t('add.manual_possible')) ?></p>
 <?php endif; ?>

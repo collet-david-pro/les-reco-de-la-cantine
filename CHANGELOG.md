@@ -3,7 +3,23 @@
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/). Numérotation [semver](https://semver.org/lang/fr/).
 Chaque version indique si elle contient une **mise à jour de la base** (bouton « Mettre à jour la base » après téléversement).
 
-## [0.2.0] — 2026-10-15
+## [0.3.0] — 2026-10-15
+
+**Mise à jour de la base : non** (simple remplacement des fichiers).
+
+### Ajouté
+- 🎮 **Jeux vidéo sans clé grâce à Steam** : la recherche de jeux fonctionne dès l'installation (jaquette, genres et résumé en français,
+  plateformes, studio). Surtout des jeux PC ; les jeux console restent possibles en ajout manuel.
+- 🎮 **IGDB en option** (toutes plateformes, consoles comprises) : identifiants Twitch gratuits à saisir dans *Réglages*, jeton d'accès
+  renouvelé automatiquement. Priorité des sources : IGDB, sinon RAWG, sinon Steam.
+- 📱 **Bouton « Installer l'appli »** pour tous les membres sur mobile (accueil et profil) : installation directe sur Android/Chrome,
+  explications pas à pas sur iPhone. Masqué si l'appli est déjà installée ; « Plus tard » le cache 30 jours.
+
+### Modifié
+- La clé RAWG devient facultative : plus d'alerte dans l'administration quand elle manque (seule la clé TMDB est signalée).
+- *Réglages* : section « Clés d'API » réorganisée (films/séries, jeux vidéo avec la source utilisée, « Où regarder »), bouton « Tester la clé IGDB ».
+
+
 
 **Mise à jour de la base : non** (simple remplacement des fichiers).
 

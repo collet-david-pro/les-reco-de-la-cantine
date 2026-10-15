@@ -26,7 +26,13 @@ class HttpClient
         'api.deezer.com',
         'www.youtube.com',
         'api.github.com', // notification de nouvelle version
+        'store.steampowered.com',
+        'api.igdb.com',
+        'id.twitch.tv', // jeton d'accès IGDB
     ];
+
+    /** Hôtes d'images dont on peut vérifier l'existence (requête HEAD). */
+    public const IMAGE_HOSTS = ['shared.akamai.steamstatic.com'];
 
     public const TTL_SEARCH = 86400;     // 24 h
     public const TTL_DETAILS = 604800;   // 7 jours
@@ -45,12 +51,26 @@ class HttpClient
      */
     public function getJson(string $url, array $headers = [], int $ttl = self::TTL_SEARCH): array
     {
+        return $this->json($url, $headers, null, $ttl);
+    }
+
+    /**
+     * POST d'un corps texte (requêtes IGDB) ; réponse JSON décodée.
+     * @throws ApiException
+     */
+    public function postJson(string $url, string $body, array $headers = [], int $ttl = self::TTL_SEARCH): array
+    {
+        return $this->json($url, $headers, $body, $ttl);
+    }
+
+    private function json(string $url, array $headers, ?string $postBody, int $ttl): array
+    {
         $host = (string) parse_url($url, PHP_URL_HOST);
         if (parse_url($url, PHP_URL_SCHEME) !== 'https' || !in_array($host, self::ALLOWED_HOSTS, true)) {
             throw new ApiException('Hôte non autorisé : ' . $host);
         }
 
-        $cacheKey = hash('sha256', $url . '|' . implode('|', $headers));
+        $cacheKey = hash('sha256', $url . '|' . implode('|', $headers) . '|' . ($postBody ?? ''));
         if ($ttl > 0 && $this->db !== null && !$this->refresh) {
             $cached = $this->cacheGet($cacheKey);
             if ($cached !== null) {
@@ -58,7 +78,7 @@ class HttpClient
             }
         }
 
-        $body = $this->request($url, $headers);
+        $body = $this->request($url, $headers, $postBody);
         $data = json_decode($body, true);
         if (!is_array($data)) {
             throw new ApiException('Réponse illisible de ' . $host);
@@ -70,8 +90,23 @@ class HttpClient
         return $data;
     }
 
-    /** Requête réelle via cURL. Surchargée dans les tests (réponses enregistrées). */
-    protected function request(string $url, array $headers): string
+    /** Vrai si l'image existe (HEAD, hôtes d'images autorisés uniquement). Surchargée dans les tests. */
+    public function urlExists(string $url): bool
+    {
+        if (parse_url($url, PHP_URL_SCHEME) !== 'https' || !in_array((string) parse_url($url, PHP_URL_HOST), self::IMAGE_HOSTS, true)) {
+            return false;
+        }
+        $curl = curl_init($url);
+        curl_setopt_array($curl, [
+            CURLOPT_NOBODY => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 5,
+        ]);
+        curl_exec($curl);
+        return (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE) === 200;
+    }
+
+    /** Requête réelle via cURL (GET, ou POST si $postBody est fourni). Surchargée dans les tests. */
+    protected function request(string $url, array $headers, ?string $postBody = null): string
     {
         $host = (string) parse_url($url, PHP_URL_HOST);
         $curl = curl_init($url);
@@ -88,6 +123,10 @@ class HttpClient
             CURLOPT_USERAGENT => 'LesRecoDeLaCantine/' . CANTINE_VERSION . ' (+' . CANTINE_REPO_URL . ')',
             CURLOPT_ENCODING => '',
         ]);
+        if ($postBody !== null) {
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $postBody);
+        }
         if (defined('CURLOPT_PROTOCOLS_STR')) {
             curl_setopt($curl, CURLOPT_PROTOCOLS_STR, 'https');
         } elseif (defined('CURLOPT_PROTOCOLS')) {

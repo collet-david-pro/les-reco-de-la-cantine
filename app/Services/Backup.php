@@ -41,10 +41,10 @@ final class Backup
     ];
 
     /** Réglages jamais restaurés depuis une sauvegarde (propres à l'instance en cours). */
-    private const LOCAL_SETTINGS = ['schema_version', 'maintenance', 'update_latest', 'update_checked_at', 'update_error'];
+    private const LOCAL_SETTINGS = ['schema_version', 'maintenance', 'update_latest', 'update_checked_at', 'update_error', 'igdb_token', 'igdb_token_expires'];
 
     /** Réglages secrets, exclus de l'export par défaut. */
-    public const SECRET_SETTINGS = ['tmdb_key', 'rawg_key'];
+    public const SECRET_SETTINGS = ['tmdb_key', 'rawg_key', 'igdb_client_id', 'igdb_client_secret'];
 
     /** Tables techniques vidées lors d'une restauration. */
     private const TECHNICAL_TABLES = ['watch_providers', 'remember_tokens', 'login_attempts', 'api_cache'];

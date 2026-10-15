@@ -19,19 +19,27 @@
     <section class="panel">
         <h2 class="section-title"><?= e(t('settings.api_keys')) ?></h2>
         <p class="hint"><?= e(t('settings.keys_hint')) ?></p>
-        <?php foreach (['tmdb_key' => ['TMDB', $tmdbMasked, t('settings.tmdb_help')], 'rawg_key' => ['RAWG', $rawgMasked, t('settings.rawg_help')]] as $name => [$label, $masked, $help]): ?>
-            <div class="field">
-                <label for="<?= e($name) ?>"><?= e(t('settings.key_label', ['api' => $label])) ?></label>
-                <input type="password" id="<?= e($name) ?>" name="<?= e($name) ?>" value="" autocomplete="off" placeholder="<?= e($masked !== '' ? $masked : t('settings.no_key')) ?>">
-                <p class="hint"><?= e($help) ?> <?= e($masked !== '' ? t('settings.key_keep') : '') ?></p>
-                <?php if ($masked !== ''): ?>
-                    <div class="field-check">
-                        <input type="checkbox" id="remove_<?= e($name) ?>" name="remove_<?= e($name) ?>" value="1">
-                        <label for="remove_<?= e($name) ?>"><?= e(t('settings.key_remove')) ?></label>
-                    </div>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
+
+        <h3 class="subsection-title"><?= e(t('settings.movies_title')) ?></h3>
+        <?= partial('admin/key_field', ['name' => 'tmdb_key', 'label' => t('settings.key_label', ['api' => 'TMDB']), 'masked' => $masked['tmdb_key'], 'help' => t('settings.tmdb_help')]) ?>
+
+        <h3 class="subsection-title"><?= e(t('settings.games_title')) ?></h3>
+        <p class="callout"><?= e(t('settings.games_source_' . $gameSource)) ?></p>
+        <p class="hint"><?= e(t('settings.games_hint')) ?></p>
+        <details class="key-help">
+            <summary><?= e(t('settings.igdb_how')) ?></summary>
+            <ol>
+                <li><?= e(t('settings.igdb_step1')) ?></li>
+                <li><?= e(t('settings.igdb_step2')) ?></li>
+                <li><?= e(t('settings.igdb_step3')) ?></li>
+                <li><?= e(t('settings.igdb_step4')) ?></li>
+            </ol>
+        </details>
+        <?= partial('admin/key_field', ['name' => 'igdb_client_id', 'label' => t('settings.igdb_client_id'), 'masked' => $masked['igdb_client_id'], 'help' => '']) ?>
+        <?= partial('admin/key_field', ['name' => 'igdb_client_secret', 'label' => t('settings.igdb_client_secret'), 'masked' => $masked['igdb_client_secret'], 'help' => '']) ?>
+        <?= partial('admin/key_field', ['name' => 'rawg_key', 'label' => t('settings.key_label', ['api' => 'RAWG']) . ' ' . t('settings.optional'), 'masked' => $masked['rawg_key'], 'help' => t('settings.rawg_help')]) ?>
+
+        <h3 class="subsection-title"><?= e(t('settings.providers_title')) ?></h3>
         <div class="field field-short">
             <label for="watch_region"><?= e(t('settings.region')) ?></label>
             <input type="text" id="watch_region" name="watch_region" value="<?= e($region) ?>" maxlength="2" pattern="[A-Za-z]{2}">
@@ -54,11 +62,11 @@
 <section class="panel">
     <h2 class="section-title"><?= e(t('settings.test_keys')) ?></h2>
     <div class="button-row">
-        <?php foreach (['tmdb' => [$tmdbMasked, 'TMDB'], 'rawg' => [$rawgMasked, 'RAWG']] as $which => [$masked, $label]): ?>
+        <?php foreach (['tmdb' => [$masked['tmdb_key'], 'TMDB'], 'igdb' => [$masked['igdb_client_secret'], 'IGDB'], 'rawg' => [$masked['rawg_key'], 'RAWG']] as $which => [$keyMasked, $label]): ?>
             <form method="post" action="<?= e(url('admin/reglages/tester')) ?>" class="inline-form">
                 <?= csrf_field() ?>
                 <input type="hidden" name="which" value="<?= e($which) ?>">
-                <button type="submit" class="button"<?= $masked === '' ? ' disabled' : '' ?>><?= e(t('settings.test', ['api' => $label])) ?></button>
+                <button type="submit" class="button"<?= $keyMasked === '' ? ' disabled' : '' ?>><?= e(t('settings.test', ['api' => $label])) ?></button>
             </form>
         <?php endforeach; ?>
     </div>

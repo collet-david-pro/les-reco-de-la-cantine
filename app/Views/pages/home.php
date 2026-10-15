@@ -4,6 +4,8 @@
     <a class="button button-primary" href="<?= e(url('ajouter')) ?>"><?= partial('partials/icon', ['name' => 'plus']) ?> <?= e(t('home.add')) ?></a>
 </div>
 
+<?= partial('partials/install_app', ['dismissible' => true]) ?>
+
 <?php if ($newCount > 0): ?>
     <p class="callout">
         <?= e(t_plural('home.new_since', $newCount)) ?>

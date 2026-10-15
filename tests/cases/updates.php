@@ -17,7 +17,7 @@ final class FakeGithub extends HttpClient
         parent::__construct(null);
     }
 
-    protected function request(string $url, array $headers): string
+    protected function request(string $url, array $headers, ?string $postBody = null): string
     {
         $this->calls++;
         if ($this->fixture === null) {

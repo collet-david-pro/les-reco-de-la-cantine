@@ -9,7 +9,7 @@
  *  - label / plural : libellés affichés ;
  *  - seen : libellé du statut "vu" pour ce type (Vu, Lu, Joué, Écouté) ;
  *  - icon : émoji affiché sur les boutons et les cartes ;
- *  - sources : connecteurs de recherche utilisables (voir Services/Api/Sources.php) ;
+ *  - sources : connecteurs de recherche, par ordre de priorité : le premier configuré est utilisé (voir Services/Api/Sources.php) ;
  *  - extra : infos pratiques affichées sur la fiche (clé du champ JSON media.extra => [libellé, format]).
  */
 declare(strict_types=1);
@@ -63,7 +63,7 @@ final class Types
             'plural' => 'Jeux vidéo',
             'seen' => 'Joué',
             'icon' => '🎮',
-            'sources' => ['rawg'],
+            'sources' => ['igdb', 'rawg', 'steam'], // IGDB et RAWG si configurés, sinon Steam (sans clé)
             'extra' => [
                 'platforms' => ['Plateformes', 'text'],
                 'developers' => ['Studio', 'text'],

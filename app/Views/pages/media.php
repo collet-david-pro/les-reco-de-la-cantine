@@ -7,7 +7,7 @@ use Cantine\Types;
 $type = $media['type'];
 $extraLines = Types::formatExtra($type, $media['extra']);
 $imdb = $media['extra']['imdb_id'] ?? null;
-$sourceLabels = ['tmdb' => 'TMDB', 'openlibrary' => 'Open Library', 'rawg' => 'RAWG', 'deezer' => 'Deezer', 'youtube' => 'YouTube'];
+$sourceLabels = ['tmdb' => 'TMDB', 'openlibrary' => 'Open Library', 'rawg' => 'RAWG', 'igdb' => 'IGDB', 'steam' => 'Steam', 'deezer' => 'Deezer', 'youtube' => 'YouTube'];
 ?>
 <article class="media-page">
     <header class="media-hero">
@@ -101,8 +101,9 @@ $sourceLabels = ['tmdb' => 'TMDB', 'openlibrary' => 'Open Library', 'rawg' => 'R
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-            <?php if ($media['source'] === 'rawg'): ?>
-                <p class="hint"><?= e(t('media.rawg_attribution')) ?> <a href="https://rawg.io/" target="_blank" rel="noopener noreferrer">RAWG</a></p>
+            <?php $gameSites = ['rawg' => ['RAWG', 'https://rawg.io/'], 'igdb' => ['IGDB', 'https://www.igdb.com/']]; ?>
+            <?php if (isset($gameSites[$media['source']])): ?>
+                <p class="hint"><?= e(t('media.games_attribution')) ?> <a href="<?= e($gameSites[$media['source']][1]) ?>" target="_blank" rel="noopener noreferrer"><?= e($gameSites[$media['source']][0]) ?></a></p>
             <?php endif; ?>
         </section>
     <?php endif; ?>

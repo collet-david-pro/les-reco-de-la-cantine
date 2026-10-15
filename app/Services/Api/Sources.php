@@ -18,11 +18,21 @@ final class Sources
     {
     }
 
-    /** Connecteur de recherche d'un type (null si le type n'en a pas). */
+    /**
+     * Connecteur de recherche d'un type : le premier de la liste qui est configuré
+     * (ex. jeux : IGDB, sinon RAWG, sinon Steam qui ne demande pas de clé). Null si le type n'en a aucun.
+     */
     public function forType(string $type): ?SourceInterface
     {
-        $source = Types::get($type)['sources'][0] ?? null;
-        return $source !== null ? $this->get($source, $type) : null;
+        $first = null;
+        foreach (Types::get($type)['sources'] as $name) {
+            $source = $this->get($name, $type);
+            if ($source !== null && $source->isAvailable()) {
+                return $source;
+            }
+            $first ??= $source;
+        }
+        return $first;
     }
 
     public function get(string $source, string $type): ?SourceInterface
@@ -31,6 +41,8 @@ final class Sources
             'tmdb' => new Tmdb($this->http, $this->settings->get('tmdb_key'), $type, $this->region()),
             'openlibrary' => new OpenLibrary($this->http),
             'rawg' => new Rawg($this->http, $this->settings->get('rawg_key')),
+            'igdb' => new Igdb($this->http, $this->settings, $this->settings->get('igdb_client_id'), $this->settings->get('igdb_client_secret')),
+            'steam' => new Steam($this->http, $this->region()),
             'deezer' => new Deezer($this->http),
             'youtube' => new YouTube($this->http),
             default => null,

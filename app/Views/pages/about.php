@@ -12,7 +12,7 @@
         </li>
         <li><p><?= e(t('about.justwatch')) ?> <a href="https://www.justwatch.com/" target="_blank" rel="noopener noreferrer">JustWatch</a>.</p></li>
         <li><p><?= e(t('about.openlibrary')) ?> <a href="https://openlibrary.org/" target="_blank" rel="noopener noreferrer">Open Library</a>.</p></li>
-        <li><p><?= e(t('about.rawg')) ?> <a href="https://rawg.io/" target="_blank" rel="noopener noreferrer">RAWG</a>.</p></li>
+        <li><p><?= e(t('about.rawg')) ?> <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">Steam</a>, <a href="https://www.igdb.com/" target="_blank" rel="noopener noreferrer">IGDB</a> <?= e(t('about.games_more')) ?> <a href="https://rawg.io/" target="_blank" rel="noopener noreferrer">RAWG</a>.</p></li>
         <li><p><?= e(t('about.deezer')) ?> <a href="https://www.deezer.com/" target="_blank" rel="noopener noreferrer">Deezer</a>.</p></li>
         <li><p><?= e(t('about.youtube')) ?></p></li>
     </ul>

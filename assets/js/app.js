@@ -11,6 +11,13 @@
 
     var csrf = document.body ? document.body.getAttribute('data-csrf') : null;
 
+    // --- Installation de l'appli (PWA) : on capte tôt la proposition d'installation du navigateur (Android/Chrome) ---
+    var installPrompt = null;
+    window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault(); // on affichera notre propre bouton
+        installPrompt = event;
+    });
+
     function onReady(fn) {
         if (document.readyState !== 'loading') { fn(); } else { document.addEventListener('DOMContentLoaded', fn); }
     }
@@ -250,6 +257,52 @@
                 }
             });
         });
+
+        // --- Bouton "Installer l'appli" (mobile uniquement, masqué si déjà installée) ---
+        var installBox = document.querySelector('[data-install-app]');
+        if (installBox) {
+            var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            var mobile = window.matchMedia('(pointer: coarse)').matches;
+            var ua = navigator.userAgent;
+            var isIos = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            var dismissKey = 'cantine-install-dismissed';
+            var dismissed = false;
+            try {
+                dismissed = installBox.hasAttribute('data-dismissible')
+                    && Date.now() - parseInt(localStorage.getItem(dismissKey) || '0', 10) < 30 * 86400000;
+            } catch (e) { /* stockage indisponible : on affiche */ }
+            var dialog = document.querySelector('[data-install-dialog]');
+
+            if (!standalone && mobile && !dismissed) {
+                installBox.hidden = false;
+            }
+            installBox.querySelector('[data-install-button]').addEventListener('click', function () {
+                if (installPrompt) {
+                    // Android / Chrome : vraie fenêtre d'installation.
+                    installPrompt.prompt();
+                    installPrompt.userChoice.then(function (choice) {
+                        if (choice && choice.outcome === 'accepted') { installBox.hidden = true; }
+                        installPrompt = null;
+                    });
+                    return;
+                }
+                // iPhone ou navigateur sans installation automatique : explications.
+                dialog.querySelector('[data-install-ios]').hidden = !isIos;
+                dialog.querySelector('[data-install-other]').hidden = isIos;
+                if (typeof dialog.showModal === 'function') { dialog.showModal(); } else { dialog.setAttribute('open', ''); }
+            });
+            var later = installBox.querySelector('[data-install-dismiss]');
+            if (later) {
+                later.addEventListener('click', function () {
+                    installBox.hidden = true;
+                    try { localStorage.setItem(dismissKey, String(Date.now())); } catch (e) { /* tant pis */ }
+                });
+            }
+            window.addEventListener('appinstalled', function () {
+                installBox.hidden = true;
+                toast(installBox.getAttribute('data-done') || 'Appli installée !', false);
+            });
+        }
 
         // --- Application installable (PWA) ---
         var base = document.body.getAttribute('data-base');

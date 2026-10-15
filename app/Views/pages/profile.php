@@ -21,6 +21,8 @@ use Cantine\Types;
     <?php endif; ?>
 </section>
 
+<?php if ($isMe): ?><?= partial('partials/install_app') ?><?php endif; ?>
+
 <section class="panel">
     <h2 class="section-title"><?= e(t('profile.numbers')) ?></h2>
     <ul class="stat-grid">
